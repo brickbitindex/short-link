@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>BRB 短链接系统</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://lib.sinaapp.com/js/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    html {
+      font-size: 100px;
+    }
+    body {
+      font-size: 0.14rem;
+      padding: 0 0.2rem;
+    }
+    #result {
+      margin-top: 0.2rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>BRB 短链接系统</h1>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="input-group">
+        <input id="linkInput" type="text" class="form-control" placeholder="输入原始链接">
+        <span class="input-group-btn">
+          <button id="getBtn" class="btn btn-primary" type="button">生成</button>
+        </span>
+      </div><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->
+  </div><!-- /.row -->
+  <div class="well well-sm" id="result">...</div>
+
+  <script>
+    $(function () {
+      var $result = $('#result');
+      var $input = $('#linkInput');
+      $('#getBtn').click(function () {
+        var input = $input.val();
+        $.ajax({
+          type: 'GET',
+          xhrFields: {
+            'Access-Control-Allow-Origin': '*',
+          },
+          url: 'https://brb.tf/get_url?url=' + escape(input),
+        }).done(function (data) {
+          var url = data.url;
+          $result.html(url);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
